@@ -1,0 +1,131 @@
+body{
+    padding-top: 50px;
+}
+header{
+    background: url('../img/jared-arango.jpg');
+    color:#ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #080808;
+}
+h1.header-title{
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -2px;
+}
+
+
+/* style for card */
+.list-group{
+    list-style: none;
+}
+
+.list-group-item:hover{
+    background: #eee;
+}
+
+.card-text{
+    color:#999;
+}
+
+.list-group-item .buttons{
+    display: none;
+}
+
+.list-group-item:hover .buttons{
+    display: block;
+}
+
+.card-footer{
+    padding: 5px;
+}
+
+.card-footer small{
+    color:#999;
+}
+
+/* end style for card */
+
+
+/* task modal */
+
+input.task-input{
+    width:100%;
+    border:none;
+    font-size: 18px;
+    height: 46px;
+    line-height: 1.33333;
+    color: #555;
+    display: block;
+    font-style: italic;
+}
+
+input.task-input:focus , input.task-input:active{
+    outline: none;
+}
+
+.done{
+    text-decoration: line-through;
+    color: #aaa;
+}
+
+table.table{
+    padding: 8px;
+}
+
+table.table thead td:first-child{
+    text-align: center;
+    vertical-align: middle;
+
+}
+
+tbody tr td:first-child{
+    text-align: center;
+    vertical-align: middle;
+}
+
+.modal-footer{
+    justify-content:flex-start;
+}
+
+.modal-footer-first{
+    flex-grow: 3;
+}
+
+.modal-footer-second{
+    flex-grow: 1;
+}
+
+/* modal */
+
+
+
+/* svg */
+.mysvg{
+    width: 20px;
+    height: 20px;
+}
+
+.ok-svg{
+    background: url('../svg/check-circle-solid.svg');
+}
+
+.edit-svg{
+    background: url('../svg/edit-solid.svg');
+}
+
+.trash-svg{
+    background: url('../svg/trash-alt-solid.svg');
+}
+
+.trash-r-svg{
+    background: url('../svg/trash-alt-regular.svg');
+}
+
+.user-svg
+{
+    background: url('../svg/user-solid.svg');
+}
+
+
+/* svg */
