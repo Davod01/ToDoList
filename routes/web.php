@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/','todoListController@index');
+
 });
+    
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');

@@ -17,4 +17,9 @@ function checkAllFunc()
         $('.task-modal-check-item').prop('checked',false);
     }
 };
+
+function Logout()
+{
+    document.getElementById('logout-form').submit();
+};
  

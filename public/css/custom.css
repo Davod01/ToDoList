@@ -100,32 +100,10 @@ tbody tr td:first-child{
 
 
 
-/* svg */
-.mysvg{
-    width: 20px;
-    height: 20px;
+/* nav */
+
+.nav-link{
+    color: #eee;
 }
 
-.ok-svg{
-    background: url('../svg/check-circle-solid.svg');
-}
-
-.edit-svg{
-    background: url('../svg/edit-solid.svg');
-}
-
-.trash-svg{
-    background: url('../svg/trash-alt-solid.svg');
-}
-
-.trash-r-svg{
-    background: url('../svg/trash-alt-regular.svg');
-}
-
-.user-svg
-{
-    background: url('../svg/user-solid.svg');
-}
-
-
-/* svg */
+/* nav */
