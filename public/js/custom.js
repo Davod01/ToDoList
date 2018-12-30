@@ -3,8 +3,10 @@ $(document).ready(function(){
     $('.task-modal-check-item').prop('checked',false);
 });
 
-
+// click event
 $( '#task-modal-ccheckbox_all' ).on( "click", checkAllFunc )
+// click event
+
 
 function checkAllFunc()
 {
@@ -18,8 +20,4 @@ function checkAllFunc()
     }
 };
 
-function Logout()
-{
-    document.getElementById('logout-form').submit();
-};
  
