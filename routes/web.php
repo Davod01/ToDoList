@@ -15,6 +15,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/','todoListController@index');
 
+    Route::get('/create',['as' => 'createTask','uses'=>'todoListController@create']);
+
+    Route::post('/store',['as' => 'storeTask','uses'=>'todoListController@store']);
+
+    Route::get('/b','todoListController@b');
+
 });
     
 

@@ -11,7 +11,6 @@
     <!--  stylesheet -->
     <link rel="stylesheet" type="text/css" href="{{asset('bootstrap/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('css/pretty-checkbox.min.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{asset('css/all.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{asset('css/custom.css')}}" />
     <!--  stylesheet -->
 
@@ -19,7 +18,6 @@
     <!-- javascript file -->
     <script src="{{asset('js/jquery-3.2.1.js')}}"></script>
     <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('js/popper.min.js')}}"></script>
     <script src="{{asset('js/all.js')}}"></script>
     <!-- javascript file -->
 
@@ -61,9 +59,9 @@
                 </div>
 
                 <div class="float-right">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#TodoList-Modal">
+                <a href="{{ route('createTask') }}" class="btn btn-success" style="color:#fff;"  id="show-newTaskModal">
                 Create new Task
-                </button>
+                </a>
                 </div>
             </div>
         </div>

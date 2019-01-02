@@ -29,6 +29,11 @@ class user_table_seeder extends Seeder
                 'email'=>'soheil.nar@gmail.com',
                 'password'=>Hash::make('123456')
             ],
+            [
+                'name'=> 'ahmad',
+                'email'=>'ahmad@gmail.com',
+                'password'=>Hash::make('123456')
+            ]
         ]);
     }
 }

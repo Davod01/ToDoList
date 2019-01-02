@@ -84,10 +84,6 @@ tbody tr td:first-child{
     vertical-align: middle;
 }
 
-.modal-footer{
-    justify-content:flex-start;
-}
-
 .modal-footer-first{
     flex-grow: 3;
 }
@@ -96,7 +92,7 @@ tbody tr td:first-child{
     flex-grow: 1;
 }
 
-/* modal */
+/* end modal */
 
 
 
@@ -106,4 +102,13 @@ tbody tr td:first-child{
     color: #eee;
 }
 
-/* nav */
+/* end nav */
+
+
+/* other */
+
+.hidden{
+    display: none;
+}
+
+/* end other */
