@@ -31,4 +31,8 @@ class User extends Authenticatable
     public function todoList(){
         return $this->hasMany(TodoList::class);
     }
+
+    public function owns(TodoList $todo){
+        return $this->TodoList->contains($todo);
+    }
 }

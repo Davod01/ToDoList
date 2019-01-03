@@ -1,7 +1,6 @@
 @extends('layouts.main')
 @section('title')ToDo List @endsection
 @section('content')
-<!-- main container -->
 
 <?php $task_count = Auth::user()->todoList->count(); ?>
 
@@ -9,7 +8,10 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
 
-            <div class="" id="Alert-to-user">
+            <div class="alert alert-warning" style="display:none;" id="Alert-for-user">
+                No Records Existing
+            </div>
+            <div class="" id="Alert-for-user-2">
             </div>
 
             <!-- card for list group -->
@@ -30,8 +32,8 @@
         </div><!-- end col -->
 
 
-        @include('modal.newTaskModal')
-        @include('modal.editTaskModal')
+        @include('modal.TodoListModal')
+        @include('modal.TaskModal')
 
 
     </div><!-- end row -->

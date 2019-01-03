@@ -1,38 +1,13 @@
 $(document).ready(function(){
-    $( '#task-modal-checkbox_all' ).prop('checked',false);
-    $('.task-modal-check-item').prop('checked',false);
-    if(UpdateTodo_list_footer() > 0){
-        $('#Alert-to-user').removeClass().fadeOut(0);
-        $('.card').fadeIn(0);
-    }
-    else{
-        $('.card').fadeOut(0);
-        $('#Alert-to-user').removeClass().addClass('alert alert-warning').text('No Record Found').fadeIn(0);
-    }
+    UpdateTodo_list_footer();
 });
 
-// click event
-$( '#task-modal-checkbox_all' ).on( "click", checkAllFunc );
-$( '#show-newTaskModal' ).on( "click", show_newTaskModal );
-// click event
 
 
-function checkAllFunc()
-{
-    if( $('#task-modal-checkbox_all').prop('checked') == true )
-    {
-        $('.task-modal-check-item').prop('checked',true);
-    }
-    else
-    {
-        $('.task-modal-check-item').prop('checked',false);
-    }
-};
-
-
-function show_newTaskModal(event){
+$( '#show-TodoListModal' ).click(function(event){
     event.preventDefault();
     let url = $(this).attr('href');
+
     $.ajax({
         url: url,
         datatype : 'html',
@@ -41,7 +16,10 @@ function show_newTaskModal(event){
         }
     });
     $('#TodoList-Modal').modal('show');
-};
+    $('#TodoList-Modal-submit').removeClass().addClass('btn btn-primary').text('Create');
+    $('#TodoList-Modal-title').text('Create TodoList');
+    
+});
 
 
 
@@ -61,27 +39,35 @@ $( '#TodoList-Modal-submit' ).click(function(event){
         method : 'POST',
         data:form.serialize(),
         success : function(response){
-            if( $('.card').css('display') == 'none' ){
-
-                $('#Alert-to-user').removeClass().fadeOut(0);
-                $('.card').fadeIn(0);
-                $('#Todo_List').prepend(response);
-                $('#TodoList-Modal').modal('hide');
+            if( $('#TodoList-Modal-submit').hasClass('editTaskMode') ){
+                let _html = $.parseHTML(response);
+                let id = _html["0"].id;
+                $('#' + id).replaceWith(response);
+                $('#' + id).find('.Update_or_new_status').fadeIn().text('Updated');
                 UpdateTodo_list_footer();
+                showMessage('Todo Lists is Updated','alert alert-primary');
+            }
+            else if( $('#TodoList-Modal-submit').hasClass('deleteTaskMode') ){
+                $('#todo-list-'+ response.id).fadeOut(function(){
+                    $(this).remove();
+                    UpdateTodo_list_footer();
+                });
+                showMessage('Todo Lists is Deleted','alert alert-waning');
             }
             else{
                 $('#Todo_List').prepend(response);
-                $('#TodoList-Modal').modal('hide');
+                $('#Todo_List li:first-child').find('.Update_or_new_status').fadeIn();
                 UpdateTodo_list_footer();
+                showMessage('Todo Lists is Created','alert alert-primary');
             }
+            $('#TodoList-Modal').modal('hide');
 
             // console.log(response);
         },
         error:function(xhr){
             let errors = xhr.responseJSON;
             if($.isEmptyObject(errors) == false){
-                // console.log(errors);
-
+                console.log(errors);
 
                 if( errors.hasOwnProperty('errors') ){
                     if(errors.errors.hasOwnProperty('title')){
@@ -103,9 +89,7 @@ $( '#TodoList-Modal-submit' ).click(function(event){
                         $('#todoList-form-group-Description').append('<div class="valid-feedback">Looks Good</div>');
                     }
                 }
-                
             }
-            
         }
     });
 });
@@ -113,18 +97,69 @@ $( '#TodoList-Modal-submit' ).click(function(event){
 
 function UpdateTodo_list_footer(){
     let total = $('#Todo_List').children().length;
-    $('#todo_list_footer').text(total).next().text(total> 1 ? ' Records':' Record');
+    switch (total) {
+        case 0:
+            $('#Alert-for-user').fadeIn();
+            $('.card').fadeOut(0);
+            break;
+        case 1:
+            $('#Alert-for-user').fadeOut(0);
+            $('#todo_list_footer').text(total).next().text(' Records');
+            $('.card').fadeIn(0);
+        default:
+            $('#Alert-for-user').fadeOut(0);
+            $('#todo_list_footer').text(total).next().text(' Records');
+            $('.card').fadeIn(0);
+            break;
+    }
+
     return total;
 }
 
 
-function showMessage(message){
-    $('#Alert-to-user').removeClass().addClass('alert alert-primary').text(message).fadeIn(500,function(){
-        $(this).fadeOut(10000);
-    });
+function showMessage(message,_class){
+    $('#Alert-for-user-2').removeClass().addClass(_class).text(message).fadeTo(1000,500)
+    .slideUp(1200);
 }
  
 
 $('#TodoList-Modal').on('keypress',":input:not(textarea)",function(event){
     return event.keyCode != 13;
 });
+
+
+
+$('body').on('click',".Show_editTodoListForm",function(event){
+    event.preventDefault();
+    let url = $(this).attr('href');
+
+    $.ajax({
+        url: url,
+        datatype: 'html',
+        success: function(response){
+            $('#TodoList-Modal-body').html(response);
+        }
+    });
+    $('#TodoList-Modal').modal('show');
+    $('#TodoList-Modal-submit').removeClass().addClass('btn btn-primary editTaskMode').text('Update');
+    $('#TodoList-Modal-title').text('Update TodoList');
+});
+
+
+$('body').on('click',".Show_deleteTodoListForm",function(event){
+    event.preventDefault();
+    let url = $(this).attr('href');
+
+    $.ajax({
+        url: url,
+        datatype: 'html',
+        success: function(response){
+            $('#TodoList-Modal-body').html(response);
+        }
+    });
+    $('#TodoList-Modal').modal('show');
+    $('#TodoList-Modal-submit').removeClass().addClass('btn btn-danger deleteTaskMode').text('Delete');
+    $('#TodoList-Modal-title').text('Delete TodoList');
+    
+});
+    

@@ -19,7 +19,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/store',['as' => 'storeTask','uses'=>'todoListController@store']);
 
-    Route::get('/b','todoListController@b');
+    Route::get('/edit/{todo}',['as' => 'editTask','uses'=>'todoListController@editTask']);
+
+    Route::post('/update/{todo}',['as' => 'updateTask','uses'=>'todoListController@updateTask']);
+    
+    Route::get('/delete/{todo}',['as' => 'deleteTask','uses'=>'todoListController@deleteTask']);
+
+    Route::post('/destroy',['as' => 'destroyTask','uses'=>'todoListController@destroyTask']);
 
 });
     
