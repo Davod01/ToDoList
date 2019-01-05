@@ -15,17 +15,23 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/','todoListController@index');
 
-    Route::get('/create',['as' => 'createTask','uses'=>'todoListController@create']);
+    Route::get('/get',['as' => 'getTodoList','uses'=>'todoListController@getTodoList']);
 
-    Route::post('/store',['as' => 'storeTask','uses'=>'todoListController@store']);
+    Route::post('/store',['as' => 'storeTodoList','uses'=>'todoListController@storeTodoList']);
 
-    Route::get('/edit/{todo}',['as' => 'editTask','uses'=>'todoListController@editTask']);
+    Route::get('/edit/{todo}',['as' => 'editTodoList','uses'=>'todoListController@editTodoList']);
 
-    Route::post('/update/{todo}',['as' => 'updateTask','uses'=>'todoListController@updateTask']);
+    Route::post('/update/{todo}',['as' => 'updateTodoList','uses'=>'todoListController@updateTodoList']);
     
-    Route::get('/delete/{todo}',['as' => 'deleteTask','uses'=>'todoListController@deleteTask']);
+    Route::get('/delete/{todo}',['as' => 'deleteTodoList','uses'=>'todoListController@deleteTodoList']);
 
-    Route::post('/destroy',['as' => 'destroyTask','uses'=>'todoListController@destroyTask']);
+    Route::post('/destroy',['as' => 'destroyTodoList','uses'=>'todoListController@destroyTodoList']);
+
+    Route::get('/task/{todo}',['as' => 'getTask','uses'=>'todoListController@getTask']);
+
+    Route::post('/createTask',['as' => 'createTask','uses'=>'tasksController@createTask']);
+
+    Route::post('/updateTask/{task}',['as' => 'updateTask','uses'=>'todoListController@storeTask']);
 
 });
     

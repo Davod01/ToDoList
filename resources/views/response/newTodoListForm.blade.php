@@ -1,4 +1,4 @@
-<form action="{{ route('storeTask') }}" method="POST">
+<form action="{{ route('storeTodoList') }}" method="POST">
     @csrf
     <div class="form-group" id="todoList-form-group-Title">
         <label for="" class="label-control">List Name</label>

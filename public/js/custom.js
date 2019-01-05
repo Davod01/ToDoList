@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 $( '#show-TodoListModal' ).click(function(event){
     event.preventDefault();
-    let url = $(this).attr('href');
+    let url = $(this).attr('el_url');
 
     $.ajax({
         url: url,
@@ -52,7 +52,7 @@ $( '#TodoList-Modal-submit' ).click(function(event){
                     $(this).remove();
                     UpdateTodo_list_footer();
                 });
-                showMessage('Todo Lists is Deleted','alert alert-waning');
+                showMessage('Todo Lists is Deleted','alert alert-warning');
             }
             else{
                 $('#Todo_List').prepend(response);
@@ -131,13 +131,18 @@ $('#TodoList-Modal').on('keypress',":input:not(textarea)",function(event){
 
 $('body').on('click',".Show_editTodoListForm",function(event){
     event.preventDefault();
-    let url = $(this).attr('href');
+    let url = $(this).attr('el_url');
 
     $.ajax({
         url: url,
         datatype: 'html',
         success: function(response){
             $('#TodoList-Modal-body').html(response);
+        },
+        error:function(xhr){
+            let errors = xhr.responseJSON;
+            if($.isEmptyObject(errors) == false){
+                console.log(errors);}
         }
     });
     $('#TodoList-Modal').modal('show');
@@ -148,13 +153,18 @@ $('body').on('click',".Show_editTodoListForm",function(event){
 
 $('body').on('click',".Show_deleteTodoListForm",function(event){
     event.preventDefault();
-    let url = $(this).attr('href');
+    let url = $(this).attr('el_url');
 
     $.ajax({
         url: url,
         datatype: 'html',
         success: function(response){
             $('#TodoList-Modal-body').html(response);
+        },
+        error:function(xhr){
+            let errors = xhr.responseJSON;
+            if($.isEmptyObject(errors) == false){
+                console.log(errors);}
         }
     });
     $('#TodoList-Modal').modal('show');
@@ -162,4 +172,111 @@ $('body').on('click',".Show_deleteTodoListForm",function(event){
     $('#TodoList-Modal-title').text('Delete TodoList');
     
 });
+
+
+$('body').on('click',".Show_Task_modal",function(event){
+    event.preventDefault();
+    let url = $(this).attr('el_url');
+
+    $.ajax({
+        url: url,
+        datatype: 'html',
+        success: function(response){
+            $('#Task-Modal-body tbody').html(response);
+            count_all_tasks();
+            $('#Task-Modal-footer div label').each(function(){
+                if($(this).hasClass('active')){
+                    $(this).trigger('click');
+                }
+            });
+            $('#task-modal-checkbox_all').prop('checked',function(i){
+                i=true;
+                $('.task-modal-check-item').each(function(){
+                    if($(this).is(':checked') == false){
+                        i=false;
+                    }
+                });
+                return i;
+            });
+            
+        },
+
+        error:function(xhr){
+            let errors = xhr.responseJSON;
+            if($.isEmptyObject(errors) == false){
+                console.log(errors);}
+        }
+    });
+    $('#Task-Modal').modal('show');
     
+});
+
+
+$('#select_all_tasks').parent('label').click(function(){
+    $('.task-modal-check-item').each(function(){
+        $(this).parents('tr').fadeIn();
+    });
+    count_all_tasks();
+});
+
+$('#select_actived_tasks').parent('label').click(function(){
+    $('.task-modal-check-item').each(function(){
+        if($(this).is(':checked')){
+            $(this).parents('tr').fadeOut();
+        }
+        else{
+            $(this).parents('tr').fadeIn();
+        }
+    });
+    count_tasks(false);
+});
+
+$('#select_completed_tasks').parent('label').click(function(){
+    $('.task-modal-check-item').each(function(){
+        if($(this).is(':checked')){
+            $(this).parents('tr').fadeIn();
+        }
+        else{
+            $(this).parents('tr').fadeOut();
+        }
+    });
+    count_tasks(true);
+});
+
+function count_all_tasks(){
+
+    let count = $('#Task-Modal-body tbody tr').length;
+    $('#task_modal_counts').text(count + ' Task');
+
+}
+
+
+function count_tasks(_completed){
+    let count = 0;
+    $('.task-modal-check-item').each(function(){
+        if($(this).is(':checked') == _completed) {
+            count++;
+        }
+    });
+    $('#task_modal_counts').text(count + ' Task');
+}
+
+$('body').on('click','#task-modal-checkbox_all',function(){
+    if( $(this).is(':checked') == true ){
+        
+        $('.task-modal-check-item').each(function(){
+            $(this).prop('checked',true);
+        });
+    }
+    else{
+        $('.task-modal-check-item').each(function(){
+            $(this).prop('checked',false);
+        });
+    }
+    $('#Task-Modal-footer div label').each(function(){
+        if($(this).hasClass('active')){
+            $(this).trigger('click');
+        }
+    });
+
+});

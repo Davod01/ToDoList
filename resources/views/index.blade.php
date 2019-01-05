@@ -2,7 +2,7 @@
 @section('title')ToDo List @endsection
 @section('content')
 
-<?php $task_count = Auth::user()->todoList->count(); ?>
+<?php $task_count = $todoList->count(); ?>
 
 <div class="container">
     <div class="row">
@@ -18,9 +18,9 @@
 
             <div class="card">
                 <ul class="list-group" id="Todo_List">
-                @foreach(Auth::user()->todoList as $todo)
-                    @include('response.taskListItem')
-                @endforeach
+                    @foreach($todoList as $todo)
+                        @include('response.taskListItem')
+                    @endforeach
                 </ul>
 
                 <div class="card-footer">
@@ -38,6 +38,5 @@
 
     </div><!-- end row -->
 </div><!-- end container -->
-
 @endsection
 

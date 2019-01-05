@@ -11,16 +11,19 @@ use App\TodoList;
 class todoListController extends Controller
 {
     public function index(){
-
-
-        return view('index');
+        \DB::enableQueryLog();
+        $todoList = TodoList::where('user_id',Auth::user()->id)
+            ->with('task')
+            ->get();
+            
+        return view('index',compact('todoList'));
     }
 
-    public function create(){
+    public function getTodoList(){
         return view('response.newTodoListForm');
     }
 
-    public function store(taskRequest $request){
+    public function storeTodoList(taskRequest $request){
         
         $todo = new TodoList;
         $todo->title = $request->title;
@@ -33,12 +36,12 @@ class todoListController extends Controller
     }
 
 
-    public function editTask(TodoList $todo)
+    public function editTodoList(TodoList $todo)
     {
         return view('response.editTodoListForm',compact('todo') );
     }
 
-    public function updateTask(taskRequest $request,TodoList $todo)
+    public function updateTodoList(taskRequest $request,TodoList $todo)
     {
         $todo->title =$request->title;
         $todo->description =$request->description;
@@ -47,12 +50,12 @@ class todoListController extends Controller
         return view('response.taskListItem',compact('todo'));
     }
 
-    public function deleteTask(TodoList $todo)
+    public function deleteTodoList(TodoList $todo)
     {
         return view('response.deleteTodoListForm',compact('todo') );
     }
 
-    public function destroyTask(Request $request)
+    public function destroyTodoList(Request $request)
     {
         $this->validate($request,[
             'id' => 'integer'
@@ -63,6 +66,12 @@ class todoListController extends Controller
         }
         $todo->delete();
         return $todo;
+    }
+
+
+    public function getTask(TodoList $todo)
+    {
+        return view('response.showTaskResponse',compact('todo'));
     }
 
 

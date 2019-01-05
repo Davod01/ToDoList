@@ -1,4 +1,4 @@
-<form action="{{ route('updateTask',$todo->id) }}" method="POST">
+<form action="{{ route('updateTodoList',$todo->id) }}" method="POST">
     @csrf
     <div class="form-group" id="todoList-form-group-Title">
         <label for="" class="label-control">List Name</label>

@@ -25,71 +25,23 @@
                                 </td>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="pretty p-default p-round p-thick">
-                                            <input type="checkbox" class="task-modal-check-item">
-                                            <div class="state p-primary-o">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        the First Task
-                                        <a href="#" class="btn btn-danger btn-sm float-right">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr class="done">
-                                    <td>
-                                        <div class="pretty p-default p-round p-thick">
-                                            <input type="checkbox" class="task-modal-check-item">
-                                            <div class="state p-primary-o">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        the second Task
-                                        <a href="#" class="btn btn-danger btn-sm float-right">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="pretty p-default p-round p-thick">
-                                            <input type="checkbox" class="task-modal-check-item">
-                                            <div class="state p-primary-o">
-                                                <label></label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        the third Task
-                                        <a href="#" class="btn btn-danger btn-sm float-right">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="modal-footer" style="justify-content:flex-start;">
+                <div class="modal-footer" style="justify-content:flex-start;" id="Task-Modal-footer">
                     <div class="modal-footer-first btn-group btn-group-toggle" data-toggle="buttons">
                        <label class="btn btn-secondary active">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked><small> All</small>
+                        <input type="radio" name="options" id="select_all_tasks" autocomplete="off"><small> All</small>
                         </label>
                         <label class="btn btn-secondary">
-                            <input type="radio" name="options" id="option2" autocomplete="off"><small> Active</small>
+                            <input type="radio" name="options" id="select_actived_tasks" autocomplete="off"><small> Active</small>
                         </label>
                         <label class="btn btn-secondary">
-                            <input type="radio" name="options" id="option3" autocomplete="off"><small> Completed</small>
+                            <input type="radio" name="options" id="select_completed_tasks" autocomplete="off"><small> Completed</small>
                         </label>
                     </div>
-                    <div class="modal-footer-second"><small>3 Item Left</small></div>
+                    <div class="modal-footer-second"><small id="task_modal_counts">3 Item Left</small></div>
                 </div>
             </div><!-- End content -->
         </div> <!-- End Modal -->
