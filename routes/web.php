@@ -29,9 +29,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/task/{todo}',['as' => 'getTask','uses'=>'todoListController@getTask']);
 
-    Route::post('/createTask',['as' => 'createTask','uses'=>'tasksController@createTask']);
+    Route::post('/createTask/{todoid}',['as' => 'createTask','uses'=>'tasksController@createTask']);
 
     Route::post('/updateTask/{task}',['as' => 'updateTask','uses'=>'todoListController@storeTask']);
+
+    Route::post('/destroyTask/{task}',['as' => 'destroyTask','uses'=>'todoListController@destroyTask']);
 
 });
     

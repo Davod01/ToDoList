@@ -176,7 +176,8 @@ $('body').on('click',".Show_deleteTodoListForm",function(event){
 
 $('body').on('click',".Show_Task_modal",function(event){
     event.preventDefault();
-    let url = $(this).attr('el_url');
+    let url = $(this).attr('el_url'),
+    action = $(this).attr('data_id');
 
     $.ajax({
         url: url,
@@ -198,6 +199,7 @@ $('body').on('click',".Show_Task_modal",function(event){
                 });
                 return i;
             });
+            $('#create-task-form').attr('action',action);
             
         },
 
@@ -219,6 +221,7 @@ $('#select_all_tasks').parent('label').click(function(){
     count_all_tasks();
 });
 
+
 $('#select_actived_tasks').parent('label').click(function(){
     $('.task-modal-check-item').each(function(){
         if($(this).is(':checked')){
@@ -231,6 +234,7 @@ $('#select_actived_tasks').parent('label').click(function(){
     count_tasks(false);
 });
 
+
 $('#select_completed_tasks').parent('label').click(function(){
     $('.task-modal-check-item').each(function(){
         if($(this).is(':checked')){
@@ -242,6 +246,7 @@ $('#select_completed_tasks').parent('label').click(function(){
     });
     count_tasks(true);
 });
+
 
 function count_all_tasks(){
 
@@ -280,3 +285,31 @@ $('body').on('click','#task-modal-checkbox_all',function(){
     });
 
 });
+
+
+$('#create-task-form').submit(function(e){
+    e.preventDefault();
+    let form = $(this),
+    url = form.attr('action');
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: form.serialize(),
+        success: function(response){
+            $('#Task-Modal-body tbody').prepend(response);
+            form.trigger('reset');
+            $('#task-modal-checkbox_all').prop('checked',false);
+
+        },
+        error: function(xhr){
+            let errors = xhr.responseJSON;
+            if($.isEmptyObject(errors) == false){
+                console.log(errors);
+                form.trigger('reset');
+                count_all_tasks();
+            }
+        }
+    });
+});
+

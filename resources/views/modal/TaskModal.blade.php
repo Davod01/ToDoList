@@ -21,7 +21,10 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="text" placeholder="Enter New Task" class="task-input" value="">
+                                    <form id="create-task-form" method="POST">
+                                        @csrf
+                                        <input type="text" id="new-task-title" name="title" placeholder="Enter New Task" class="task-input">
+                                    </form>
                                 </td>
                             </thead>
                             <tbody>
