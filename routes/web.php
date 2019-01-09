@@ -31,9 +31,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/createTask/{todoid}',['as' => 'createTask','uses'=>'tasksController@createTask']);
 
-    Route::post('/updateTask/{task}',['as' => 'updateTask','uses'=>'todoListController@storeTask']);
+    Route::PUT('/updateTask/{task}',['as' => 'updateTask','uses'=>'tasksController@updateTask']);
 
-    Route::post('/destroyTask/{task}',['as' => 'destroyTask','uses'=>'todoListController@destroyTask']);
+    Route::PUT('/updateAllTask/{todo}',['as' => 'updateAllTask','uses'=>'tasksController@updateAllTask']);
+
+    Route::delete('/destroyTask/{task}',['as' => 'destroyTask','uses'=>'tasksController@destroyTask']);
 
 });
     

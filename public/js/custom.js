@@ -177,13 +177,15 @@ $('body').on('click',".Show_deleteTodoListForm",function(event){
 $('body').on('click',".Show_Task_modal",function(event){
     event.preventDefault();
     let url = $(this).attr('el_url'),
-    action = $(this).attr('data_id');
+    action = $(this).attr('data_id'),
+    action2 = $(this).attr('data_check_all');
 
     $.ajax({
         url: url,
         datatype: 'html',
         success: function(response){
             $('#Task-Modal-body tbody').html(response);
+            $('#task-modal-checkbox_all').attr('data-url',action2);
             count_all_tasks();
             $('#Task-Modal-footer div label').each(function(){
                 if($(this).hasClass('active')){
@@ -210,7 +212,6 @@ $('body').on('click',".Show_Task_modal",function(event){
         }
     });
     $('#Task-Modal').modal('show');
-    
 });
 
 
@@ -266,24 +267,31 @@ function count_tasks(_completed){
     $('#task_modal_counts').text(count + ' Task');
 }
 
-$('body').on('click','#task-modal-checkbox_all',function(){
-    if( $(this).is(':checked') == true ){
-        
-        $('.task-modal-check-item').each(function(){
-            $(this).prop('checked',true);
-        });
-    }
-    else{
-        $('.task-modal-check-item').each(function(){
-            $(this).prop('checked',false);
-        });
-    }
-    $('#Task-Modal-footer div label').each(function(){
-        if($(this).hasClass('active')){
-            $(this).trigger('click');
+
+$('body').on('change','#task-modal-checkbox_all',function(){
+
+    let url = $(this).attr('data-url'),
+    completed =$(this).is(':checked');
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        data: {
+            completed: completed,
+            _token: $('input[name=_token]').val()
+        },
+        success: function(response){
+            $('.task-modal-check-item').prop('checked',completed);
+            task_counter();
+        },
+        error: function(xhr){
+            let errors = xhr.responseJSON;
+            if($.isEmptyObject(errors) == false){
+                console.log(errors);
+            }
         }
     });
-
+    
+    task_counter();
 });
 
 
@@ -300,6 +308,7 @@ $('#create-task-form').submit(function(e){
             $('#Task-Modal-body tbody').prepend(response);
             form.trigger('reset');
             $('#task-modal-checkbox_all').prop('checked',false);
+            task_counter();
 
         },
         error: function(xhr){
@@ -307,9 +316,65 @@ $('#create-task-form').submit(function(e){
             if($.isEmptyObject(errors) == false){
                 console.log(errors);
                 form.trigger('reset');
-                count_all_tasks();
             }
         }
     });
 });
 
+
+$('body').on('change','.task-modal-check-item',function(e){
+    e.preventDefault();
+
+    let checkbox = $(this),
+        url = checkbox.data('url'),
+        completed = checkbox.is(':checked');
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        data: {
+            completed: completed,
+            _token: $('input[name=_token]').val()
+        },
+        success: function(response){
+            task_counter();
+        },
+        error: function(xhr){
+            let errors = xhr.responseJSON;
+            if($.isEmptyObject(errors) == false){
+                console.log(errors);
+            }
+        }
+    });
+});
+
+function task_counter(){
+    $('#Task-Modal-footer div label').each(function(){
+        if($(this).hasClass('active')){
+            $(this).trigger('click');
+        }
+    });
+};
+
+
+$('body').on('click','.remove-task-btn',function(e){
+    e.preventDefault();
+
+    let task = $(this).parents('tr'),
+    url = $(this).attr('href');
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        data: {
+            _token: $('input[name=_token]').val()
+        },
+        success:function(response){
+            task.fadeOut().remove();
+        },
+        error: function(xhr){
+            let errors = xhr.responseJSON;
+            if($.isEmptyObject(errors) == false){
+                console.log(errors);
+            }
+        }
+    });
+});

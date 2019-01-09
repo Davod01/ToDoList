@@ -9,7 +9,7 @@ class Task extends Model
     protected $fillable = ['title','todo_list_id','completed_at'];
 
     public function todolist(){
-        return $this->blongsTo(TodoList::class);
+        return $this->belongsTo(TodoList::class);
     }
 
 }

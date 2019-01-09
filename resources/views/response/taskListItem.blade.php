@@ -9,7 +9,7 @@
         </h4>
         <p class="card-text">{{ $todo->description }}</p>
         <div class="buttons float-right">
-            <a href="" el_url="{{ route('getTask',$todo->id) }}" class="btn btn-info btn-xs Show_Task_modal" title="Manage Task" data_id="{{ route('createTask',$todo->id) }}">
+            <a href="" el_url="{{ route('getTask',$todo->id) }}" class="btn btn-info btn-xs Show_Task_modal" title="Manage Task" data_id="{{ route('createTask',$todo->id) }} " data_check_all="{{ route('updateAllTask',$todo->id) }}">
                 <i class="fas fa-thumbs-up" ></i>
             </a>
             <a href="" el_url="{{ route('editTodoList',$todo->id) }}" class="btn btn-primary Show_editTodoListForm" title="Edit {{ $todo->title }}">

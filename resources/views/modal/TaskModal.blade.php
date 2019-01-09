@@ -14,7 +14,7 @@
                             <thead>
                                 <td>
                                     <div class="pretty p-default p-round p-thick">
-                                    <input type="checkbox" name="task-modal-checkbox_all" id="task-modal-checkbox_all" />
+                                    <input type="checkbox" data-url="" name="task-modal-checkbox_all" id="task-modal-checkbox_all" />
                                         <div class="state p-primary-o">
                                             <label></label>
                                         </div>
